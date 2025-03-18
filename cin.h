@@ -1,8 +1,9 @@
+#pragma once
 #include <iostream>
 #include <fstream>
 #include <string>
 
-void FileInput(int& rows, int& columns)
+void FileInput(int rows, int columns)
 {
 	std::string file;
 	std::ifstream myFile("config.txt");

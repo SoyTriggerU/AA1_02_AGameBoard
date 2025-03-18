@@ -1,4 +1,5 @@
-#include <cin.h>
+#pragma once
+#include "cin.h"
 
 enum class BoardCell
 {
@@ -9,11 +10,12 @@ enum class BoardCell
 	EMPTY
 };
 
-void initializeBoard(BoardCell** &board, const int& rows, const int& columns)
+void initializeBoard(BoardCell** &board, int& rows, int& columns)
 {
+	FileInput(rows, columns);
 	// Creating a dynamic array with the number of rows
 	// and columns established by the txt
-	board = new BoardCell * [rows];
+	board = new BoardCell* [rows];
 
 	for (int i = 0; i < rows; i++)
 	{
