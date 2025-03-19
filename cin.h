@@ -2,6 +2,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include "classes.h"
 
 void FileInput(int rows, int columns)
 {

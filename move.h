@@ -1,7 +1,7 @@
 #pragma once
 #include "board.h"
 
-bool checkMovement(BoardCell** board, PlayerMovement move)
+bool checkMovement(char** board, Player player)
 {
 	int rows;
 	int columns;
@@ -10,12 +10,12 @@ bool checkMovement(BoardCell** board, PlayerMovement move)
 	{
 		for (int j = 0; j < columns; j++)
 		{
-			if (board[i][j] == BoardCell::PLAYER)
+			if (board[i][j] == "P")
 			{
-				switch (move)
+				switch (player.move)
 				{
 				case PlayerMovement::UP:
-					if (board[i-1][j] != BoardCell::WALL)
+					if (board[i - 1][j] != "*")
 					{
 						return true;
 					}
@@ -24,7 +24,7 @@ bool checkMovement(BoardCell** board, PlayerMovement move)
 						return false;
 					}
 				case PlayerMovement::DOWN:
-					if (board[i+1][j] != BoardCell::WALL)
+					if (board[i+1][j] != "*")
 					{
 						return true;
 					}
@@ -33,7 +33,7 @@ bool checkMovement(BoardCell** board, PlayerMovement move)
 						return false;
 					}
 				case PlayerMovement::LEFT:
-					if (board[i][j-1] != BoardCell::WALL)
+					if (board[i][j-1] != "*")
 					{
 						return true;
 					}
@@ -42,7 +42,7 @@ bool checkMovement(BoardCell** board, PlayerMovement move)
 						return false;
 					}
 				case PlayerMovement::RIGHT:
-					if (board[i][j+1] != BoardCell::WALL)
+					if (board[i][j+1] != "*")
 					{
 						return true;
 					}

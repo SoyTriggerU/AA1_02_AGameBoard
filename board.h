@@ -1,25 +1,16 @@
 #pragma once
 #include "cin.h"
 
-enum class BoardCell
-{
-	WALL,
-	SPIKE,
-	GEM,
-	PLAYER,
-	EMPTY
-};
-
-void initializeBoard(BoardCell** &board, int& rows, int& columns)
+void initializeBoard(char** &board, int& rows, int& columns, Player player)
 {
 	FileInput(rows, columns);
 	// Creating a dynamic array with the number of rows
 	// and columns established by the txt
-	board = new BoardCell* [rows];
+	board = new char* [rows];
 
 	for (int i = 0; i < rows; i++)
 	{
-		board[i] = new BoardCell[columns];
+		board[i] = new char[columns];
 	}
 
 	// Establishing what each cell will have
@@ -30,11 +21,11 @@ void initializeBoard(BoardCell** &board, int& rows, int& columns)
 			if ((i == 0 && j < columns) || (j == 0 && i < rows) ||
 				(i == rows - 1 && j < columns) || (j == columns - 1 && i < rows))
 			{
-				board[i][j] = BoardCell::WALL;
+				board[i][j] = "*";
 			}
 			else
 			{
-				board[i][j] = BoardCell::EMPTY;
+				board[i][j] = " ";
 			}
 		}
 	}
@@ -49,9 +40,9 @@ void initializeBoard(BoardCell** &board, int& rows, int& columns)
 	{
 		int x = rand() % (rows - 2) + 1;
 		int y = rand() % (columns - 2) + 1;
-		if (board[x][y] == BoardCell::EMPTY)
+		if (board[x][y] == " ")
 		{
-			board[x][y] = BoardCell::SPIKE;
+			board[x][y] = "S";
 		}
 	}
 
@@ -61,18 +52,18 @@ void initializeBoard(BoardCell** &board, int& rows, int& columns)
 	{
 		int x = rand() % (rows - 2) + 1;
 		int y = rand() % (columns - 2) + 1;
-		if (board[x][y] == BoardCell::EMPTY)
+		if (board[x][y] == " ")
 		{
-			board[x][y] = BoardCell::GEM;
+			board[x][y] = "G";
 		}
 	}
 
 	// Initializing in which cell the player will spawn
-	int spawnPlayerX = rand() % (rows - 2) + 1;
-	int spawnPlayerY = rand() % (columns - 2) + 1;
-	if (spawnPlayerX >= 1 && spawnPlayerX < (rows - 1) && spawnPlayerY >= 1
-		&& spawnPlayerY < (columns - 1))
+	player.x = rand() % (rows - 2) + 1;
+	player.y = rand() % (columns - 2) + 1;
+	if (player.x >= 1 && player.x < (rows - 1) && player.y >= 1
+		&& player.y < (columns - 1))
 	{
-		board[spawnPlayerX][spawnPlayerY] = BoardCell::PLAYER;
+		board[player.x][player.y] = "P";
 	}
 }
