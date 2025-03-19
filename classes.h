@@ -1,4 +1,6 @@
 #include <iostream>
+#include <fstream>
+#include <string>
 
 enum class PlayerMovement {
 	UP,

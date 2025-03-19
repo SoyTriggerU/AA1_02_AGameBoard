@@ -1,5 +1,5 @@
 #pragma once
-#include "cin.h"
+#include "classes.h"
 
 void initializeBoard(int& rows, int& columns, Player& player)
 {
