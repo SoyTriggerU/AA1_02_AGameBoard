@@ -1,9 +1,8 @@
 #pragma once
 #include "cin.h"
 
-void initializeBoard(char** &board, int& rows, int& columns, Player player)
+void initializeBoard(int& rows, int& columns, Player& player)
 {
-	FileInput(rows, columns);
 	// Creating a dynamic array with the number of rows
 	// and columns established by the txt
 	board = new char* [rows];
@@ -18,15 +17,10 @@ void initializeBoard(char** &board, int& rows, int& columns, Player player)
 	{
 		for (int j = 0; j < columns; j++)
 		{
-			if ((i == 0 && j < columns) || (j == 0 && i < rows) ||
-				(i == rows - 1 && j < columns) || (j == columns - 1 && i < rows))
-			{
-				board[i][j] = "*";
-			}
+			if ((i == 0) || (j == 0) || (i == rows - 1) || (j == columns - 1))
+				board[i][j] = '*';
 			else
-			{
-				board[i][j] = " ";
-			}
+				board[i][j] = ' ';
 		}
 	}
 
@@ -40,9 +34,9 @@ void initializeBoard(char** &board, int& rows, int& columns, Player player)
 	{
 		int x = rand() % (rows - 2) + 1;
 		int y = rand() % (columns - 2) + 1;
-		if (board[x][y] == " ")
+		if (board[x][y] == ' ')
 		{
-			board[x][y] = "S";
+			board[x][y] = 'S';
 		}
 	}
 
@@ -52,9 +46,9 @@ void initializeBoard(char** &board, int& rows, int& columns, Player player)
 	{
 		int x = rand() % (rows - 2) + 1;
 		int y = rand() % (columns - 2) + 1;
-		if (board[x][y] == " ")
+		if (board[x][y] == ' ')
 		{
-			board[x][y] = "G";
+			board[x][y] = 'G';
 		}
 	}
 
@@ -64,6 +58,20 @@ void initializeBoard(char** &board, int& rows, int& columns, Player player)
 	if (player.x >= 1 && player.x < (rows - 1) && player.y >= 1
 		&& player.y < (columns - 1))
 	{
-		board[player.x][player.y] = "P";
+		board[player.x][player.y] = 'P';
+	}
+
+}
+
+void printBoard(int& rows, int& columns)
+{
+	for (int i = 0; i < rows; i++)
+	{
+		for (int j = 0;j < columns;j++)
+		{
+			std::cout << board[i][j] << ' ';
+
+		}
+		std::cout << std::endl;
 	}
 }

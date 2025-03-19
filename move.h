@@ -1,57 +1,48 @@
 #pragma once
 #include "board.h"
 
-bool checkMovement(char** board, Player player)
+// mirar si funciona
+PlayerMovement translateInput(char input)
+{
+	if (input == 'w' || input == 'W')
+		return PlayerMovement::UP;
+	else if (input == 's' || input == 'S')
+		return PlayerMovement::DOWN;
+	else if (input == 'a' || input == 'A')
+		return PlayerMovement::LEFT;
+	else if (input == 'd' || input == 'D')
+		return PlayerMovement::RIGHT;
+}
+
+bool checkMovement(Player player, PlayerMovement move)
 {
 	int rows;
 	int columns;
-	initializeBoard(board, rows, columns);
-	for (int i = 0; i < rows; i++) 
+	char input;
+	initializeBoard(rows, columns, player);
+	translateInput(input); // mirar si està ben implementat
+	switch (move)
 	{
-		for (int j = 0; j < columns; j++)
-		{
-			if (board[i][j] == "P")
-			{
-				switch (player.move)
-				{
-				case PlayerMovement::UP:
-					if (board[i - 1][j] != "*")
-					{
-						return true;
-					}
-					else
-					{
-						return false;
-					}
-				case PlayerMovement::DOWN:
-					if (board[i+1][j] != "*")
-					{
-						return true;
-					}
-					else
-					{
-						return false;
-					}
-				case PlayerMovement::LEFT:
-					if (board[i][j-1] != "*")
-					{
-						return true;
-					}
-					else
-					{
-						return false;
-					}
-				case PlayerMovement::RIGHT:
-					if (board[i][j+1] != "*")
-					{
-						return true;
-					}
-					else
-					{
-						return false;
-					}
-				}
-			}
-		}
+	case PlayerMovement::UP:
+		if (board[player.x--][player.y] != '*')
+			return true;
+		else
+			return false;
+	case PlayerMovement::DOWN:
+		if (board[player.x++][player.y] != '*')
+			return true;
+		else
+			return false;
+	case PlayerMovement::LEFT:
+		if (board[player.x][player.y--] != '*')
+			return true;
+		else
+			return false;
+	case PlayerMovement::RIGHT:
+		if (board[player.x][player.y++] != '*')
+			return true;
+		else
+			return false;
+
 	}
 }
