@@ -4,45 +4,60 @@
 // mirar si funciona
 PlayerMovement translateInput(char input)
 {
-	if (input == 'w' || input == 'W')
+	switch (input)
+	{
+	case 'w': 
+	case 'W':
 		return PlayerMovement::UP;
-	else if (input == 's' || input == 'S')
+	case 's':
+	case 'S':
 		return PlayerMovement::DOWN;
-	else if (input == 'a' || input == 'A')
+	case 'a':
+	case 'A':
 		return PlayerMovement::LEFT;
-	else if (input == 'd' || input == 'D')
+	case 'd':
+	case 'D':
 		return PlayerMovement::RIGHT;
+	default:
+		return PlayerMovement::UP;  //Movement by default in case of invalid input
+	}
 }
 
-bool checkMovement(Player player, PlayerMovement move)
+bool checkMovement(Player player, PlayerMovement move, int rows, int columns, int& newX, int& newY)
 {
-	int rows;
-	int columns;
-	char input;
-	initializeBoard(rows, columns, player);
-	translateInput(input); // mirar si està ben implementat
+	newX = player.x;
+	newY = player.y;
+
 	switch (move)
 	{
-	case PlayerMovement::UP:
-		if (board[player.x--][player.y] != '*')
-			return true;
-		else
-			return false;
-	case PlayerMovement::DOWN:
-		if (board[player.x++][player.y] != '*')
-			return true;
-		else
-			return false;
-	case PlayerMovement::LEFT:
-		if (board[player.x][player.y--] != '*')
-			return true;
-		else
-			return false;
-	case PlayerMovement::RIGHT:
-		if (board[player.x][player.y++] != '*')
-			return true;
-		else
-			return false;
+		case PlayerMovement::UP:
+		{
+			newX--;
+			break;
+		}
+		case PlayerMovement::DOWN:
+		{
+			newX++;
+			break;
+		}
+		case PlayerMovement::LEFT:
+		{
+			newY--;
+			break;
+		}
+		case PlayerMovement::RIGHT:
+		{
+			newY++;
+			break;
+		}
 
+		// Check if movement is valid
+		if (newX <= 0 || newX >= rows - 1 || newY <= 0 || newY >= columns - 1 || board[newX][newY] == '*')
+		{
+			std::cout << "Invalid movement. Try again\n";
+			return false;
+		}
+
+		return true;
 	}
 }

@@ -1,3 +1,4 @@
+#pragma once
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -6,15 +7,11 @@ enum class PlayerMovement {
 	UP,
 	DOWN,
 	LEFT,
-	RIGTH
+	RIGHT
 };
 
 struct Player {
 	int x; // Inidicates the player's position in x coordinates
 	int y; // Inidicates the player's position in y coordinates
-	int score;
-	PlayerMovement move;
+	int score = 0;
 };
-
-// Local variable board
-char** board;
