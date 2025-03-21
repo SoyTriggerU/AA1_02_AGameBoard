@@ -1,5 +1,6 @@
 #pragma once
 #include "board.h"
+#include "GameOver.h"
 
 // mirar si funciona
 PlayerMovement translateInput(char input)
@@ -23,41 +24,78 @@ PlayerMovement translateInput(char input)
 	}
 }
 
-bool checkMovement(Player player, PlayerMovement move, int rows, int columns, int& newX, int& newY)
+bool checkMovement(Player* player, PlayerMovement move)
 {
-	newX = player.x;
-	newY = player.y;
+	int newX = player->x;
+	int newY = player->y;
 
 	switch (move)
 	{
 		case PlayerMovement::UP:
-		{
 			newX--;
 			break;
-		}
 		case PlayerMovement::DOWN:
-		{
 			newX++;
 			break;
-		}
 		case PlayerMovement::LEFT:
-		{
 			newY--;
 			break;
-		}
 		case PlayerMovement::RIGHT:
-		{
 			newY++;
 			break;
-		}
-
-		// Check if movement is valid
-		if (newX <= 0 || newX >= rows - 1 || newY <= 0 || newY >= columns - 1 || board[newX][newY] == '*')
-		{
-			std::cout << "Invalid movement. Try again\n";
+		default:
 			return false;
-		}
+	}
+	system("cls");
 
-		return true;
+	// Check if movement is valid
+	if (board[newX][newY] == '*') 
+	{
+		std::cout << "Invalid movement. Try again\n";
+		return false;
+		system("cls");
+	}
+	return true;
+}
+
+void movePlayer(int rows, int columns, Player player)
+{
+	char input;
+
+	while (!gameOver(rows, columns, &player))
+	{
+		std::cout << "Move with W A S D, Q for exiting: ";
+		std::cin >> input;
+		if (input == 'q' || input == 'Q')
+			break;
+
+		PlayerMovement move = translateInput(input);
+
+		if (checkMovement(&player, move))
+		{
+			board[player.x][player.y] = ' '; // Delete last position
+			switch (move)
+			{
+			case PlayerMovement::UP:
+				player.x--;
+				break;
+			case PlayerMovement::DOWN:
+				player.x++;
+				break;
+			case PlayerMovement::LEFT:
+				player.y--;
+				break;
+			case PlayerMovement::RIGHT:
+				player.y++;
+				break;
+			}
+			if (gameOver(rows, columns, &player)) {
+				std::cout << "GAME OVER!!\n";
+				break;
+			}
+
+			board[player.x][player.y] = 'P'; // New player's position
+		}
+		printBoard(rows, columns);
 	}
 }
